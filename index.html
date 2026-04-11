@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+    <title>Yuzz Hade · Hd Enchant Terbaik </title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Jimp untuk pemrosesan gambar profesional -->
+    <script src="https://cdn.jsdelivr.net/npm/jimp@0.22.12/browser/lib/jimp.min.js"></script>
+    <!-- FFmpeg.wasm untuk video processing -->
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            color: #f0ebe4;
+            background-image: radial-gradient(circle at 20% 30%, #1a1a1a 0%, #050505 100%);
+            min-height: 100vh;
+        }
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --surface: #181818;
+            --border-soft: rgba(212, 175, 55, 0.2);
+            --shadow-elegant: 0 25px 40px -12px rgba(0,0,0,0.8);
+            --hd-glow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 32px; }
+        
+        /* Header */
+        .top-bar {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-soft);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .header-flex { display: flex; align-items: center; justify-content: space-between; }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .logo span { color: var(--gold); font-style: italic; }
+        .badge-premium {
+            background: var(--gold);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            box-shadow: var(--hd-glow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff88;
+            box-shadow: 0 0 10px #00ff88;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+        
+        /* Hero */
+        .hero { padding: 48px 0 32px; text-align: center; }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        .hero h1 i { color: var(--gold); margin: 0 12px; }
+        .hero-sub {
+            font-size: 1.15rem;
+            color: #c0b7a8;
+            border-bottom: 1px solid var(--gold-light);
+            padding-bottom: 24px;
+            display: inline-block;
+        }
+        
+        .capacity-notice {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 36px 0 48px;
+        }
+        .cap-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(20,20,20,0.9);
+            padding: 14px 32px;
+            border-radius: 60px;
+            border: 1px solid var(--border-soft);
+        }
+        .cap-icon { font-size: 2rem; color: var(--gold); }
+        .cap-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; }
+        .cap-value { font-weight: 700; font-size: 1.5rem; font-family: 'Playfair Display', serif; color: #fff; }
+        
+        /* Upload Panel */
+        .upload-panel {
+            background: var(--surface);
+            border-radius: 40px;
+            padding: 48px 40px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+        .dual-upload { display: flex; flex-wrap: wrap; gap: 30px; }
+        .upload-card {
+            flex: 1 1 280px;
+            background: #1e1e1e;
+            border-radius: 30px;
+            padding: 36px 24px;
+            text-align: center;
+            border: 1px solid #3a3020;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .upload-card:hover {
+            border-color: var(--gold);
+            box-shadow: var(--hd-glow);
+            transform: translateY(-3px);
+        }
+        .upload-icon { font-size: 4rem; color: var(--gold); margin-bottom: 20px; }
+        .upload-card h3 { font-family: 'Playfair Display', serif; font-size: 2rem; color: #fff; margin-bottom: 12px; }
+        .upload-limit {
+            background: #2a241a;
+            padding: 8px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 16px 0;
+            color: #e5d9c0;
+            border: 1px solid #5e4f32;
+        }
+        .upload-btn {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-btn:hover {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 20px var(--gold);
+        }
+        input[type="file"] { display: none; }
+        
+        /* FFmpeg Loading Indicator */
+        .ffmpeg-status {
+            margin: 20px 0 10px;
+            padding: 12px 20px;
+            background: #1a1a1a;
+            border-radius: 12px;
+            border: 1px solid #3a3020;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .ffmpeg-progress {
+            flex: 1;
+            height: 4px;
+            background: #2a241a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .ffmpeg-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), #f5e6a3);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .ffmpeg-text {
+            color: #aaa;
+            font-size: 0.85rem;
+            min-width: 140px;
+        }
+        
+        /* Progress Container */
+        .progress-container { margin: 24px 0 16px; display: none; }
+        .progress-bar {
+            height: 6px;
+            background: #2a241a;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), #f5e6a3);
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 10px;
+        }
+        .progress-text { color: var(--gold); font-size: 0.9rem; margin-top: 8px; }
+        
+        /* Preview Area */
+        .preview-area { margin-top: 48px; border-top: 1px solid #3a3327; padding-top: 40px; }
+        .preview-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+        .preview-header h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #f5ede1;
+        }
+        .media-preview-container { display: flex; flex-wrap: wrap; gap: 28px; }
+        .preview-card {
+            background: #181818;
+            border-radius: 28px;
+            padding: 18px 18px 24px;
+            border: 1px solid #3f372a;
+            flex: 1 1 300px;
+        }
+        .preview-media {
+            width: 100%;
+            border-radius: 18px;
+            overflow: hidden;
+            background: #0f0f0f;
+            margin-bottom: 18px;
+            aspect-ratio: 16/9;
+        }
+        .preview-media img, .preview-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hd-badge {
+            background: var(--gold);
+            color: #000;
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            box-shadow: 0 0 8px gold;
+        }
+        .media-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            color: #bcb09b;
+        }
+        .action-row { display: flex; gap: 12px; justify-content: flex-end; }
+        .icon-btn {
+            background: none;
+            border: 1px solid #5e5543;
+            padding: 10px 18px;
+            border-radius: 40px;
+            color: #e3d9c6;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .icon-btn:hover { background: #fff; color: #000; border-color: #fff; }
+        
+        /* Footer dengan Social Media */
+        .footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            border-top: 1px solid #2a241c;
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            color: #f5ede1;
+        }
+        .footer-logo i { color: var(--gold); margin: 0 6px; }
+        
+        .social-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 40px;
+            color: #c0b7a8;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid #3a3327;
+            font-size: 0.95rem;
+        }
+        .social-link i { font-size: 1.2rem; }
+        .social-link:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212,175,55,0.2);
+        }
+        .social-link.instagram:hover { background: #E1306C; border-color: #E1306C; color: #fff; }
+        .social-link.telegram:hover { background: #26A5E4; border-color: #26A5E4; color: #fff; }
+        .social-link.whatsapp:hover { background: #25D366; border-color: #25D366; color: #fff; }
+        
+        .copyright {
+            color: #8a8070;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 8px;
+        }
+        .copyright .heart { color: #ff4d4d; }
+        .developer {
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--gold);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        @media (max-width: 680px) {
+            .container { padding: 0 20px; }
+            .hero h1 { font-size: 2.5rem; }
+            .capacity-notice { flex-direction: column; align-items: center; gap: 16px; }
+            .badge-premium { font-size: 0.7rem; padding: 6px 12px; }
+            .footer-logo { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="container header-flex">
+        <div class="logo">Yuzz<span> Hade</span></div>
+        <div class="badge-premium">
+            <span class="status-indicator"></span>
+            <i class="fas fa-microchip"></i> SERVER AKTIF
+        </div>
+    </div>
+</div>
+
+<main class="container">
+    <section class="hero">
+        <h1>
+            <i class="fas fa-wand-magic-sparkles"></i> PROFESSIONAL HD
+        </h1>
+        <div class="hero-sub">
+            <strong>Yuzz Hade Pro</strong> — FFmpeg.wasm + Jimp Image Processing<br>
+            Maks 100MB video · 50MB foto. Hasil HD sejati dengan encoding profesional.
+        </div>
+    </section>
+
+    <div class="capacity-notice">
+        <div class="cap-item">
+            <i class="fas fa-video cap-icon"></i>
+            <div class="cap-text">
+                <div class="cap-label">Video</div>
+                <div class="cap-value">≤ 100 <small>MB</small></div>
+            </div>
+        </div>
+        <div class="cap-item">
+            <i class="fas fa-camera-retro cap-icon"></i>
+            <div class="cap-text">
+                <div class="cap-label">Foto</div>
+                <div class="cap-value">≤ 50 <small>MB</small></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="upload-panel">
+        <!-- FFmpeg Loading Status -->
+        <div class="ffmpeg-status" id="ffmpegStatus">
+            <i class="fas fa-cog" style="color: var(--gold);"></i>
+            <span id="ffmpegStatusText">Memuat FFmpeg.wasm (≈31MB)...</span>
+            <div class="ffmpeg-progress">
+                <div class="ffmpeg-progress-bar" id="ffmpegProgressBar"></div>
+            </div>
+            <span class="ffmpeg-text" id="ffmpegProgressText">0%</span>
+        </div>
+
+        <div class="dual-upload">
+            <div class="upload-card" id="videoUploadCard">
+                <i class="fas fa-clapperboard upload-icon"></i>
+                <h3>Video</h3>
+                <div class="upload-limit"><i class="far fa-file-video"></i> max 100MB</div>
+                <button class="upload-btn" id="videoUploadBtn"><i class="fas fa-cloud-upload-alt"></i> Pilih Video</button>
+                <input type="file" id="videoInput" accept="video/*">
+                <p style="margin-top: 16px; opacity:0.7; font-size:0.8rem;">MP4, MOV, AVI · H.264 Encode</p>
+            </div>
+            <div class="upload-card" id="photoUploadCard">
+                <i class="fas fa-camera upload-icon"></i>
+                <h3>Foto Jimp</h3>
+                <div class="upload-limit"><i class="far fa-image"></i> max 50MB</div>
+                <button class="upload-btn" id="photoUploadBtn"><i class="fas fa-cloud-upload-alt"></i> Pilih Foto</button>
+                <input type="file" id="photoInput" accept="image/*">
+                <p style="margin-top: 16px; opacity:0.7; font-size:0.8rem;">JPG, PNG · Sharpen, Contrast, Resize</p>
+            </div>
+        </div>
+
+        <!-- Processing Progress -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Memproses...</div>
+        </div>
+
+        <div class="preview-area" id="previewArea">
+            <div class="preview-header">
+                <h4><i class="fas fa-crown" style="color:var(--gold); margin-right:14px;"></i>Hasil HD Enhancement</h4>
+                <span class="size-info" id="totalSizeDisplay">0 MB</span>
+            </div>
+            <div class="media-preview-container" id="mediaContainer">
+                <div class="empty-message" id="emptyPlaceholder" style="color:#8f846e; padding:30px;">
+                    <i class="fas fa-arrow-up"></i> Upload media — FFmpeg/Jimp akan meningkatkan ke HD.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer dengan Social Media & Copyright -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                Yuzz<span style="color: var(--gold);"> Hade</span> <i class="fas fa-crown"></i>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://instagram.com/yuzzhade" target="_blank" class="social-link instagram">
+                    <i class="fab fa-instagram"></i> @yuzzhade
+                </a>
+                <a href="https://t.me/yuzzhade" target="_blank" class="social-link telegram">
+                    <i class="fab fa-telegram-plane"></i> t.me/MutzOne_real
+                </a>
+                <a href="https://wa.me/6281234567890" target="_blank" class="social-link whatsapp">
+                    <i class="fab fa-whatsapp"></i> +62 812-3456-7890
+                </a>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2026 Yuzz Hade. All rights reserved. Made with <span class="heart">❤️</span> by <span class="developer">Mutz</span></p>
+                <p style="margin-top: 8px; font-size: 0.8rem;">Develop By <strong style="color: var(--gold);">Mutz</strong> · Professional HD Enhancement</p>
+            </div>
+        </div>
+    </footer>
+</main>
+
+<script>
+    (function(){
+        "use strict";
+
+        // ========== FFMPEG INITIALIZATION ==========
+        const { FFmpeg } = FFmpegWASM;
+        const ffmpeg = new FFmpeg();
+        
+        let ffmpegLoaded = false;
+        let isFFmpegLoading = false;
+        
+        const ffmpegStatusText = document.getElementById('ffmpegStatusText');
+        const ffmpegProgressBar = document.getElementById('ffmpegProgressBar');
+        const ffmpegProgressText = document.getElementById('ffmpegProgressText');
+        
+        ffmpeg.on('log', ({ message }) => {
+            console.log('[FFmpeg]', message);
+        });
+        
+        ffmpeg.on('progress', ({ progress }) => {
+            const percent = Math.round(progress * 100);
+            ffmpegProgressBar.style.width = `${percent}%`;
+            ffmpegProgressText.textContent = `${percent}%`;
+        });
+        
+        async function loadFFmpeg() {
+            if (ffmpegLoaded) return true;
+            if (isFFmpegLoading) {
+                while (!ffmpegLoaded && isFFmpegLoading) {
+                    await new Promise(r => setTimeout(r, 100));
+                }
+                return ffmpegLoaded;
+            }
+            
+            isFFmpegLoading = true;
+            ffmpegStatusText.innerHTML = '<span class="spinner"></span> Mengunduh FFmpeg.wasm (31MB)...';
+            
+            try {
+                await ffmpeg.load({
+                    coreURL: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+                    wasmURL: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm'
+                });
+                ffmpegLoaded = true;
+                ffmpegStatusText.innerHTML = '<i class="fas fa-check-circle" style="color:#00ff88;"></i> FFmpeg.wasm siap!';
+                ffmpegProgressBar.style.width = '100%';
+                ffmpegProgressText.textContent = 'Siap';
+                return true;
+            } catch (error) {
+                console.error('FFmpeg load error:', error);
+                ffmpegStatusText.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#ff6b6b;"></i> FFmpeg gagal. Gunakan fallback.';
+                ffmpegLoaded = false;
+                return false;
+            } finally {
+                isFFmpegLoading = false;
+            }
+        }
+        
+        loadFFmpeg();
+
+        // ========== DOM Elements ==========
+        const videoInput = document.getElementById('videoInput');
+        const photoInput = document.getElementById('photoInput');
+        const mediaContainer = document.getElementById('mediaContainer');
+        const totalSizeDisplay = document.getElementById('totalSizeDisplay');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+
+        const MAX_VIDEO_MB = 100;
+        const MAX_PHOTO_MB = 50;
+        let mediaItems = [];
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function updateTotalSize() {
+            const totalBytes = mediaItems.reduce((acc, item) => acc + (item.size || 0), 0);
+            totalSizeDisplay.textContent = `${(totalBytes/(1024*1024)).toFixed(2)} MB`;
+        }
+
+        function showProgress(show, text = 'Memproses...', percent = 0) {
+            progressContainer.style.display = show ? 'block' : 'none';
+            if (show) {
+                progressText.textContent = text;
+                progressFill.style.width = `${Math.min(percent, 100)}%`;
+            }
+        }
+
+        // ========== JIMP IMAGE PROCESSING (FIXED - NO BLACK & WHITE) ==========
+        async function processImageWithJimp(file) {
+            showProgress(true, 'Memproses dengan Jimp (Sharpen, Contrast, Resize HD)...', 20);
+            
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const image = await Jimp.read(Buffer.from(arrayBuffer));
+                    
+                    showProgress(true, 'Menerapkan filter HD...', 50);
+                    
+                    // HD Enhancement dengan Jimp (TANPA greyscale)
+                    image
+                        .cover(1920, 1080, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE) // Resize ke HD 1080p
+                        .contrast(0.15)      // +15% contrast
+                        .brightness(0.05)    // +5% brightness
+                        .quality(95)         // Kualitas tinggi
+                        .convolute([
+                            [-0.5, -1, -0.5],
+                            [-1, 7, -1],
+                            [-0.5, -1, -0.5]
+                        ]); // Unsharp mask untuk ketajaman
+                    
+                    showProgress(true, 'Encoding ke JPEG HD...', 80);
+                    
+                    const mime = 'image/jpeg';
+                    const enhancedBuffer = await image.getBufferAsync(mime);
+                    
+                    // Convert ke data URL
+                    const base64 = btoa(
+                        new Uint8Array(enhancedBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
+                    );
+                    const dataUrl = `data:${mime};base64,${base64}`;
+                    
+                    showProgress(true, 'Jimp HD selesai!', 100);
+                    setTimeout(() => showProgress(false), 500);
+                    
+                    resolve({
+                        dataUrl,
+                        size: enhancedBuffer.byteLength
+                    });
+                } catch (error) {
+                    console.error('Jimp error:', error);
+                    reject(error);
+                }
+            });
+        }
+
+        // ========== FFMPEG VIDEO PROCESSING ==========
+        async function processVideoWithFFmpeg(file) {
+            showProgress(true, 'Mempersiapkan FFmpeg...', 10);
+            
+            const ffmpegReady = await loadFFmpeg();
+            if (!ffmpegReady) {
+                showProgress(true, 'FFmpeg tidak tersedia, gunakan video asli...', 50);
+                const dataUrl = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.readAsDataURL(file);
+                });
+                showProgress(false);
+                return { dataUrl, size: file.size };
+            }
+            
+            showProgress(true, 'Menulis file ke FFmpeg VFS...', 20);
+            
+            const inputFileName = 'input' + file.name.substring(file.name.lastIndexOf('.'));
+            const outputFileName = 'output_hd.mp4';
+            
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                await ffmpeg.writeFile(inputFileName, new Uint8Array(arrayBuffer));
+                
+                showProgress(true, 'Encoding video ke HD H.264...', 40);
+                
+                await ffmpeg.exec([
+                    '-i', inputFileName,
+                    '-c:v', 'libx264',
+                    '-crf', '18',
+                    '-preset', 'medium',
+                    '-vf', 'unsharp=5:5:1.5:5:5:0.5,eq=contrast=1.1:brightness=0.03:saturation=1.2',
+                    '-c:a', 'aac',
+                    '-b:a', '192k',
+                    '-movflags', '+faststart',
+                    outputFileName
+                ]);
+                
+                showProgress(true, 'Membaca hasil encode...', 80);
+                
+                const data = await ffmpeg.readFile(outputFileName);
+                
+                await ffmpeg.deleteFile(inputFileName);
+                await ffmpeg.deleteFile(outputFileName);
+                
+                const blob = new Blob([data.buffer], { type: 'video/mp4' });
+                const dataUrl = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.readAsDataURL(blob);
+                });
+                
+                showProgress(true, 'FFmpeg HD Encoding selesai!', 100);
+                setTimeout(() => showProgress(false), 500);
+                
+                return {
+                    dataUrl,
+                    size: data.byteLength
+                };
+            } catch (error) {
+                console.error('FFmpeg processing error:', error);
+                showProgress(true, 'Error, gunakan video asli...', 50);
+                const dataUrl = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.readAsDataURL(file);
+                });
+                showProgress(false);
+                return { dataUrl, size: file.size };
+            }
+        }
+
+        // ========== Render ==========
+        function renderMedia() {
+            if (mediaItems.length === 0) {
+                mediaContainer.innerHTML = `<div class="empty-message" style="color:#8f846e; padding:30px;"><i class="fas fa-arrow-up"></i> Upload media — FFmpeg/Jimp akan meningkatkan ke HD.</div>`;
+                updateTotalSize();
+                return;
+            }
+
+            let html = '';
+            mediaItems.forEach((item, index) => {
+                const sizeStr = formatBytes(item.size);
+                const isVideo = item.category === 'video';
+                const iconFile = isVideo ? 'fa-video' : 'fa-image';
+                const techLabel = isVideo ? 'FFmpeg H.264' : 'Jimp HD';
+                
+                html += `
+                    <div class="preview-card">
+                        <div class="preview-media">
+                            ${isVideo ? 
+                                `<video src="${item.dataUrl}" controls style="width:100%;height:100%;object-fit:cover;"></video>` : 
+                                `<img src="${item.dataUrl}" alt="Jimp HD" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
+                            }
+                        </div>
+                        <div class="media-meta">
+                            <span><i class="far ${iconFile}"></i> ${item.name}</span>
+                            <span class="hd-badge"><i class="fas fa-star"></i> ${techLabel}</span>
+                        </div>
+                        <div class="media-meta" style="margin-top:-10px;">
+                            <span style="font-size:0.75rem;">${sizeStr} · HD Enhanced</span>
+                        </div>
+                        <div class="action-row">
+                            <button class="icon-btn download-btn" data-index="${index}"><i class="fas fa-download"></i> Simpan HD</button>
+                            <button class="icon-btn remove-btn" data-index="${index}"><i class="fas fa-trash-alt"></i> Hapus</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            mediaContainer.innerHTML = html;
+            updateTotalSize();
+
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = btn.dataset.index;
+                    if (idx !== undefined) downloadMedia(parseInt(idx));
+                });
+            });
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = btn.dataset.index;
+                    if (idx !== undefined) removeMedia(parseInt(idx));
+                });
+            });
+        }
+
+        function downloadMedia(index) {
+            const item = mediaItems[index];
+            if (!item) return;
+            const a = document.createElement('a');
+            a.href = item.dataUrl;
+            a.download = `YuzzHade_HD_${item.name || 'media'}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function removeMedia(index) {
+            mediaItems.splice(index, 1);
+            renderMedia();
+        }
+
+        function validateSize(file, type) {
+            const maxBytes = type === 'video' ? MAX_VIDEO_MB * 1024 * 1024 : MAX_PHOTO_MB * 1024 * 1024;
+            if (file.size > maxBytes) {
+                alert(`File terlalu besar (max ${type==='video'?MAX_VIDEO_MB:MAX_PHOTO_MB}MB). Ukuran: ${formatBytes(file.size)}`);
+                return false;
+            }
+            return true;
+        }
+
+        async function processFile(file, category) {
+            if (!validateSize(file, category)) return;
+            
+            try {
+                let result;
+                
+                if (category === 'photo') {
+                    result = await processImageWithJimp(file);
+                } else {
+                    result = await processVideoWithFFmpeg(file);
+                }
+                
+                mediaItems.push({
+                    name: file.name,
+                    type: file.type,
+                    size: result.size,
+                    dataUrl: result.dataUrl,
+                    category: category
+                });
+                
+                renderMedia();
+            } catch (error) {
+                console.error('Processing error:', error);
+                alert('Gagal memproses file: ' + error.message);
+                showProgress(false);
+            }
+        }
+
+        // Event Listeners
+        videoInput.addEventListener('change', (e) => {
+            const file = videoInput.files[0];
+            if (file) processFile(file, 'video');
+            videoInput.value = '';
+        });
+        
+        photoInput.addEventListener('change', (e) => {
+            const file = photoInput.files[0];
+            if (file) processFile(file, 'photo');
+            photoInput.value = '';
+        });
+
+        document.getElementById('videoUploadBtn').addEventListener('click', () => videoInput.click());
+        document.getElementById('photoUploadBtn').addEventListener('click', () => photoInput.click());
+        document.getElementById('videoUploadCard').addEventListener('click', (e) => { 
+            if(!e.target.closest('button')) videoInput.click(); 
+        });
+        document.getElementById('photoUploadCard').addEventListener('click', (e) => { 
+            if(!e.target.closest('button')) photoInput.click(); 
+        });
+
+        renderMedia();
+    })();
+</script>
+</body>
+</html>
