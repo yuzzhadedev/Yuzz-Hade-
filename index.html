@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+    
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta name="download" content="no">
+    <meta name="save" content="no">
+    
+    <title>🔒 Yuzz Hade · SUPER HD + DONASI</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Jimp & FFmpeg -->
+    <script src="https://cdn.jsdelivr.net/npm/jimp@0.22.12/browser/lib/jimp.min.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.min.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+        input, textarea { user-select: text; -webkit-user-select: text; }
+        
+        body {
+            background: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            color: #f0ebe4;
+            background-image: radial-gradient(circle at 20% 30%, #1a1a1a 0%, #050505 100%);
+            min-height: 100vh;
+        }
+        
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --surface: #181818;
+            --border-soft: rgba(212, 175, 55, 0.2);
+            --hd-glow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        body::after {
+            content: "YUZZ HADE SUPER HD";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 8vw;
+            font-weight: 900;
+            color: rgba(212, 175, 55, 0.012);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 9999;
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 20px;
+        }
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+        
+        .security-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 40px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 0.7rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .security-badge i { color: #00ff88; }
+        
+        /* Donasi Button */
+        .donate-btn-fixed {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            z-index: 1000;
+        }
+        
+        .donate-btn {
+            background: linear-gradient(145deg, #d4af37, #f5e6a3);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s;
+            border: 1px solid #fff3c9;
+        }
+        
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+        }
+        
+        /* Modal Donasi */
+        .donate-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 100001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .donate-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .donate-modal {
+            max-width: 480px;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 36px;
+            padding: 32px 28px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.9);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .donate-header {
+            margin-bottom: 24px;
+        }
+        
+        .donate-header i {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+        
+        .donate-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #fff;
+        }
+        
+        .donate-header p {
+            color: #c0b7a8;
+            font-size: 0.9rem;
+        }
+        
+        .donate-form input {
+            width: 100%;
+            padding: 14px 18px;
+            background: #1a1a1a;
+            border: 1px solid #3a3327;
+            border-radius: 40px;
+            color: #fff;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            outline: none;
+            transition: border 0.3s;
+        }
+        
+        .donate-form input:focus {
+            border-color: var(--gold);
+        }
+        
+        .amount-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .amount-btn {
+            background: #1e1e1e;
+            border: 1px solid #3a3327;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .amount-btn:hover, .amount-btn.active {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+        }
+        
+        .donate-submit-btn {
+            width: 100%;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: all 0.3s;
+        }
+        
+        .donate-submit-btn:hover {
+            background: #e6c454;
+            box-shadow: 0 0 20px rgba(212,175,55,0.4);
+        }
+        
+        .donate-submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .qr-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .qr-container img {
+            max-width: 220px;
+            border-radius: 20px;
+            background: #fff;
+            padding: 12px;
+        }
+        
+        .qr-info {
+            background: rgba(212,175,55,0.1);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: left;
+        }
+        
+        .qr-info p {
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .qr-info .label {
+            color: #8a8070;
+        }
+        
+        .qr-info .value {
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .payment-status {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        
+        .payment-status.pending {
+            background: rgba(255, 200, 0, 0.15);
+            color: #ffc800;
+            border: 1px solid #ffc800;
+        }
+        
+        .payment-status.paid {
+            background: rgba(0, 255, 100, 0.15);
+            color: #00ff64;
+            border: 1px solid #00ff64;
+        }
+        
+        .close-modal-btn {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: #8a8070;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        
+        .close-modal-btn:hover { color: var(--gold); }
+        
+        /* Update Overlay */
+        .update-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(16px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.4s, visibility 0.4s;
+        }
+        
+        .update-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .update-modal {
+            max-width: 560px;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 36px 28px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.9);
+            animation: slideIn 0.5s ease-out;
+            position: relative;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .modal-logo { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 600; color: #fff; margin-bottom: 10px; }
+        .modal-logo span { color: var(--gold); font-style: italic; }
+        
+        .update-icon { font-size: 3.5rem; color: var(--gold); margin: 16px 0; filter: drop-shadow(0 0 20px rgba(212,175,55,0.5)); animation: pulse 3s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.85;transform:scale(1.05)} }
+        
+        .modal-title { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 500; color: #fff; margin-bottom: 10px; }
+        .modal-subtitle { color: #c0b7a8; font-size: 0.95rem; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 18px; margin-bottom: 18px; }
+        
+        .update-info {
+            background: rgba(212,175,55,0.08);
+            border: 1px solid rgba(212,175,55,0.25);
+            border-radius: 18px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: left;
+        }
+        
+        .update-info p { margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+        .update-info i { color: #00ff88; width: 18px; }
+        .update-info .highlight { color: var(--gold); font-weight: 600; }
+        
+        .next-update {
+            background: linear-gradient(90deg, rgba(212,175,55,0.2), transparent);
+            padding: 10px 14px;
+            border-radius: 30px;
+            margin: 14px 0;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .next-update i { margin-right: 6px; }
+        
+        .modal-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 28px; }
+        
+        .modal-btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .modal-btn-primary { background: var(--gold); color: #000; }
+        .modal-btn-primary:hover { background: #e6c454; box-shadow: 0 0 20px rgba(212,175,55,0.4); transform: translateY(-2px); }
+        
+        .close-icon {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: #8a8070;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        
+        .close-icon:hover { color: var(--gold); }
+        
+        .dont-show-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            color: #8a8070;
+            cursor: pointer;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+        
+        .dont-show-label input { accent-color: var(--gold); width: 16px; height: 16px; }
+        
+        /* Header */
+        .top-bar {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-soft);
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+        
+        .header-flex { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 600; color: #fff; }
+        .logo span { color: var(--gold); font-style: italic; }
+        
+        .badge-premium {
+            background: var(--gold);
+            color: #000;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            box-shadow: var(--hd-glow);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+            box-shadow: 0 0 8px #00ff88;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Hero */
+        .hero { padding: 36px 0 24px; text-align: center; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 500; color: #fff; margin-bottom: 12px; }
+        .hero h1 i { color: var(--gold); margin: 0 8px; }
+        .hero-sub { font-size: 1rem; color: #c0b7a8; border-bottom: 1px solid var(--gold-light); padding-bottom: 20px; display: inline-block; }
+        
+        /* Capacity */
+        .capacity-notice { display: flex; justify-content: center; gap: 24px; margin: 28px 0 36px; flex-wrap: wrap; }
+        .cap-item {
+            display: flex; align-items: center; gap: 12px;
+            background: rgba(20,20,20,0.9); padding: 12px 24px;
+            border-radius: 60px; border: 1px solid var(--border-soft);
+        }
+        .cap-icon { font-size: 1.6rem; color: var(--gold); }
+        .cap-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; }
+        .cap-value { font-weight: 700; font-size: 1.3rem; font-family: 'Playfair Display', serif; color: #fff; }
+        
+        /* Upload Panel */
+        .upload-panel {
+            background: var(--surface); border-radius: 32px; padding: 32px 24px;
+            margin-bottom: 40px; border: 1px solid rgba(212,175,55,0.25);
+        }
+        .dual-upload { display: flex; flex-wrap: wrap; gap: 20px; }
+        .upload-card {
+            flex: 1 1 260px; background: #1e1e1e; border-radius: 24px; padding: 28px 20px;
+            text-align: center; border: 1px solid #3a3020; transition: all 0.3s; cursor: pointer;
+        }
+        .upload-card:hover { border-color: var(--gold); box-shadow: var(--hd-glow); transform: translateY(-3px); }
+        .upload-icon { font-size: 3rem; color: var(--gold); margin-bottom: 16px; }
+        .upload-card h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #fff; margin-bottom: 10px; }
+        .upload-limit {
+            background: #2a241a; padding: 6px 16px; border-radius: 50px; display: inline-block;
+            margin: 12px 0; color: #e5d9c0; border: 1px solid #5e4f32; font-size: 0.85rem;
+        }
+        .upload-btn {
+            background: transparent; border: 2px solid var(--gold); color: #fff;
+            padding: 12px 24px; border-radius: 60px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s; font-size: 0.85rem;
+        }
+        .upload-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
+        input[type="file"] { display: none; }
+        
+        /* Preview */
+        .preview-area { margin-top: 36px; border-top: 1px solid #3a3327; padding-top: 32px; }
+        .preview-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 24px; }
+        .preview-header h4 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #f5ede1; }
+        .media-preview-container { display: flex; flex-wrap: wrap; gap: 20px; }
+        .preview-card {
+            background: #181818; border-radius: 24px; padding: 14px 14px 20px;
+            border: 1px solid #3f372a; flex: 1 1 280px;
+        }
+        .preview-media {
+            width: 100%; border-radius: 16px; overflow: hidden; background: #0f0f0f;
+            margin-bottom: 14px; aspect-ratio: 16/9; position: relative;
+        }
+        .preview-media::after {
+            content: "© YUZZ HADE"; position: absolute; bottom: 8px; right: 8px;
+            background: rgba(0,0,0,0.6); color: var(--gold); padding: 3px 10px;
+            border-radius: 20px; font-size: 0.6rem; font-weight: 600;
+            backdrop-filter: blur(4px); border: 1px solid var(--gold); z-index: 10;
+        }
+        .preview-media img, .preview-media video {
+            width: 100%; height: 100%; object-fit: contain; background: #000;
+        }
+        .hd-badge {
+            background: var(--gold); color: #000; padding: 4px 10px; border-radius: 30px;
+            font-size: 0.65rem; font-weight: 800; text-transform: uppercase;
+        }
+        .media-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; color: #bcb09b; font-size: 0.85rem; }
+        .action-row { display: flex; gap: 10px; justify-content: flex-end; }
+        .icon-btn {
+            background: none; border: 1px solid #5e5543; padding: 8px 14px;
+            border-radius: 40px; color: #e3d9c6; cursor: pointer; transition: all 0.3s; font-size: 0.8rem;
+        }
+        .icon-btn:hover { background: #fff; color: #000; border-color: #fff; }
+        
+        /* Footer */
+        .footer { margin-top: 60px; padding: 32px 0; border-top: 1px solid #2a241c; }
+        .footer-content { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 500; color: #f5ede1; }
+        .social-links { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        .social-link {
+            display: flex; align-items: center; gap: 6px; padding: 8px 16px;
+            background: rgba(255,255,255,0.05); border-radius: 40px; color: #c0b7a8;
+            text-decoration: none; transition: all 0.3s; border: 1px solid #3a3327; font-size: 0.85rem;
+        }
+        .social-link i { font-size: 1rem; }
+        .social-link:hover { background: var(--gold); color: #000; border-color: var(--gold); }
+        .copyright { color: #8a8070; font-size: 0.8rem; text-align: center; }
+        .copyright .heart { color: #ff4d4d; }
+        .developer { color: var(--gold); font-weight: 500; }
+        
+        .ffmpeg-status {
+            margin: 16px 0 10px; padding: 10px 16px; background: #1a1a1a;
+            border-radius: 12px; border: 1px solid #3a3020; display: flex; align-items: center; gap: 10px;
+        }
+        .ffmpeg-progress { flex: 1; height: 3px; background: #2a241a; border-radius: 4px; overflow: hidden; }
+        .ffmpeg-progress-bar { height: 100%; background: linear-gradient(90deg, var(--gold), #f5e6a3); width: 0%; transition: width 0.3s; }
+        .ffmpeg-text { color: #aaa; font-size: 0.75rem; min-width: 120px; }
+        .progress-container { margin: 20px 0 12px; display: none; }
+        .progress-fill-main { height: 100%; background: linear-gradient(90deg, var(--gold), #f5e6a3); width: 0%; transition: width 0.3s; border-radius: 10px; }
+        .progress-text-main { color: var(--gold); font-size: 0.8rem; margin-top: 6px; }
+        .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--gold); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .security-alert {
+            position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+            background: #ff4444; color: white; padding: 10px 20px; border-radius: 40px;
+            z-index: 100000; display: none; font-size: 0.85rem;
+        }
+        
+        /* Mobile */
+        @media (max-width: 600px) {
+            .container { padding: 0 16px; }
+            .logo { font-size: 1.5rem; }
+            .badge-premium { padding: 4px 12px; font-size: 0.6rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero-sub { font-size: 0.9rem; }
+            .cap-item { padding: 10px 18px; }
+            .cap-icon { font-size: 1.4rem; }
+            .cap-value { font-size: 1.1rem; }
+            .upload-panel { padding: 24px 16px; }
+            .upload-card { padding: 20px 16px; }
+            .upload-icon { font-size: 2.5rem; }
+            .upload-card h3 { font-size: 1.4rem; }
+            .upload-btn { padding: 10px 20px; font-size: 0.75rem; }
+            .preview-header h4 { font-size: 1.4rem; }
+            .update-modal { padding: 28px 20px; }
+            .modal-logo { font-size: 1.8rem; }
+            .modal-title { font-size: 1.6rem; }
+            .donate-btn-fixed { bottom: 12px; left: 12px; }
+            .donate-btn { padding: 8px 16px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="security-alert" id="securityAlert"><i class="fas fa-shield-alt"></i> Tindakan tidak diizinkan!</div>
+<div class="security-badge"><i class="fas fa-lock"></i><span>PROTECTED · SUPER HD</span></div>
+
+<!-- Donasi Button -->
+<div class="donate-btn-fixed">
+    <button class="donate-btn" id="openDonateBtn">
+        <i class="fas fa-heart" style="color: #ff4d4d;"></i> Donasi
+    </button>
+</div>
+
+<!-- Donasi Modal -->
+<div class="donate-overlay" id="donateOverlay">
+    <div class="donate-modal">
+        <button class="close-modal-btn" id="closeDonateBtn">&times;</button>
+        
+        <div class="donate-header">
+            <i class="fas fa-hand-holding-heart"></i>
+            <h3>Dukung Yuzz Hade</h3>
+            <p>Donasi Anda membantu kami terus berkembang</p>
+        </div>
+        
+        <div id="donateFormStep">
+            <div class="donate-form">
+                <input type="text" id="donorName" placeholder="Nama Anda" value="Supporter">
+                <input type="number" id="donateAmount" placeholder="Jumlah (Min Rp 5.000)" min="5000" value="10000">
+                
+                <div class="amount-buttons">
+                    <button class="amount-btn" data-amount="5000">Rp 5K</button>
+                    <button class="amount-btn active" data-amount="10000">Rp 10K</button>
+                    <button class="amount-btn" data-amount="20000">Rp 20K</button>
+                    <button class="amount-btn" data-amount="50000">Rp 50K</button>
+                    <button class="amount-btn" data-amount="100000">Rp 100K</button>
+                </div>
+                
+                <button class="donate-submit-btn" id="generateQRBtn">
+                    <i class="fas fa-qrcode"></i> Buat QRIS
+                </button>
+            </div>
+        </div>
+        
+        <div id="qrCodeStep" style="display:none;">
+            <div class="qr-container">
+                <img id="qrImage" src="" alt="QRIS">
+            </div>
+            
+            <div class="qr-info">
+                <p><span class="label">Total:</span> <span class="value" id="qrAmount"></span></p>
+                <p><span class="label">ID Transaksi:</span> <span class="value" id="qrTransactionId"></span></p>
+                <p><span class="label">Kadaluarsa:</span> <span class="value" id="qrExpired"></span></p>
+            </div>
+            
+            <div class="payment-status pending" id="paymentStatus">
+                <i class="fas fa-clock"></i> Menunggu Pembayaran
+            </div>
+            
+            <button class="donate-submit-btn" id="checkPaymentBtn" style="margin-top:12px;">
+                <i class="fas fa-sync-alt"></i> Cek Status
+            </button>
+            <button class="donate-submit-btn" id="backToFormBtn" style="margin-top:8px; background:#3a3327; color:#fff;">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Update Overlay -->
+<div class="update-overlay" id="updateOverlay">
+    <div class="update-modal">
+        <button class="close-icon" id="closeUpdateBtn">&times;</button>
+        
+        <div class="modal-logo">Yuzz<span> Hade</span></div>
+        <div class="update-icon"><i class="fas fa-shield-halved"></i></div>
+        <h2 class="modal-title">🔒 UPDATE TERBARU</h2>
+        <div class="modal-subtitle">Perlindungan Maksimal · Kualitas SUPER HD</div>
+        
+        <div class="update-info">
+            <p><i class="fas fa-check-circle"></i> <span><span class="highlight">Security On</span> - Anti-GetCode, Anti-Downloader</span></p>
+            <p><i class="fas fa-check-circle"></i> <span><span class="highlight">Kualitas HD Maksimal</span> - Sharpen, Contrast</span></p>
+            <p><i class="fas fa-check-circle"></i> <span><span class="highlight">Rasio Asli</span> - Gambar tidak terpotong</span></p>
+            <p><i class="fas fa-check-circle"></i> <span><span class="highlight">Fitur Donasi</span> - Dukung kami via QRIS</span></p>
+        </div>
+        
+        <div class="next-update">
+            <i class="fas fa-calendar-alt" style="color: var(--gold);"></i>
+            <strong>Update Selanjutnya:</strong> 20 April 2026
+        </div>
+        
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-primary" id="continueBtn">
+                <i class="fas fa-arrow-right"></i> Lanjutkan
+            </button>
+        </div>
+        
+        <label class="dont-show-label">
+            <input type="checkbox" id="dontShowAgainCheck"> Jangan tampilkan lagi
+        </label>
+        
+        <div style="margin-top: 16px; color: #7a7265; font-size: 0.8rem;">
+            <p>© 2026 Yuzz Hade · Develop By <span class="developer">Mutz</span></p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Website -->
+<div class="main-website">
+    <div class="top-bar">
+        <div class="container header-flex">
+            <div class="logo">Yuzz<span> Hade</span></div>
+            <div class="badge-premium"><span class="status-indicator"></span><i class="fas fa-shield"></i> PROTECTED</div>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="hero">
+            <h1><i class="fas fa-crown"></i> SUPER HD</h1>
+            <div class="hero-sub">
+                <strong>Yuzz Hade</strong> — Security On · Rasio Asli · Clean Quality<br>
+                Maks 100MB video · 50MB foto
+            </div>
+        </section>
+
+        <div class="capacity-notice">
+            <div class="cap-item"><i class="fas fa-video cap-icon"></i><div class="cap-text"><div class="cap-label">Video</div><div class="cap-value">≤ 100 <small>MB</small></div></div></div>
+            <div class="cap-item"><i class="fas fa-camera-retro cap-icon"></i><div class="cap-text"><div class="cap-label">Foto</div><div class="cap-value">≤ 50 <small>MB</small></div></div></div>
+        </div>
+
+        <div class="upload-panel">
+            <div class="ffmpeg-status" id="ffmpegStatus">
+                <i class="fas fa-cog" style="color:var(--gold);"></i>
+                <span id="ffmpegStatusText">Memuat FFmpeg...</span>
+                <div class="ffmpeg-progress"><div class="ffmpeg-progress-bar" id="ffmpegProgressBar"></div></div>
+                <span class="ffmpeg-text" id="ffmpegProgressText">0%</span>
+            </div>
+
+            <div class="dual-upload">
+                <div class="upload-card" id="videoUploadCard">
+                    <i class="fas fa-clapperboard upload-icon"></i><h3>Video</h3>
+                    <div class="upload-limit"><i class="far fa-file-video"></i> max 100MB</div>
+                    <button class="upload-btn" id="videoUploadBtn"><i class="fas fa-cloud-upload-alt"></i> Pilih Video</button>
+                    <input type="file" id="videoInput" accept="video/*">
+                </div>
+                <div class="upload-card" id="photoUploadCard">
+                    <i class="fas fa-camera upload-icon"></i><h3>Foto</h3>
+                    <div class="upload-limit"><i class="far fa-image"></i> max 50MB</div>
+                    <button class="upload-btn" id="photoUploadBtn"><i class="fas fa-cloud-upload-alt"></i> Pilih Foto</button>
+                    <input type="file" id="photoInput" accept="image/*">
+                </div>
+            </div>
+
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar"><div class="progress-fill-main" id="progressFillMain"></div></div>
+                <div class="progress-text-main" id="progressTextMain">Memproses...</div>
+            </div>
+
+            <div class="preview-area">
+                <div class="preview-header"><h4><i class="fas fa-crown" style="color:var(--gold);"></i> Hasil SUPER HD</h4><span id="totalSizeDisplay">0 MB</span></div>
+                <div class="media-preview-container" id="mediaContainer">
+                    <div style="color:#8f846e;padding:30px;"><i class="fas fa-arrow-up"></i> Upload media</div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">Yuzz<span style="color:var(--gold);"> Hade</span> <i class="fas fa-shield"></i></div>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i> @yuzzhade</a>
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                </div>
+                <div class="copyright"><p>© 2026 Yuzz Hade · <span class="heart">❤️</span> by <span class="developer">Mutz</span></p></div>
+            </div>
+        </footer>
+    </main>
+</div>
+
+<script>
+(function(){
+    "use strict";
+    
+    // ========== SECURITY ==========
+    const securityAlert = document.getElementById('securityAlert');
+    function showSecurityAlert(m) { securityAlert.style.display='block'; securityAlert.innerHTML=`<i class="fas fa-shield-alt"></i> ${m}`; setTimeout(()=>securityAlert.style.display='none',2000); }
+    document.addEventListener('contextmenu', e => { if(!['INPUT','TEXTAREA'].includes(e.target.tagName)) { e.preventDefault(); showSecurityAlert('🔒 Klik kanan dinonaktifkan'); return false; }});
+    document.addEventListener('keydown', e => { if(e.key==='F12'||e.keyCode===123||(e.ctrlKey&&e.shiftKey&&e.key==='I')||(e.ctrlKey&&e.key==='U')||(e.ctrlKey&&e.key==='S')) { e.preventDefault(); showSecurityAlert('🔒 Tindakan diblokir'); return false; }});
+    document.addEventListener('selectstart', e => { if(!['INPUT','TEXTAREA'].includes(e.target.tagName)) e.preventDefault(); });
+    document.addEventListener('dragstart', e => e.preventDefault());
+    
+    // ========== DONASI ==========
+    const donateOverlay = document.getElementById('donateOverlay');
+    const openDonateBtn = document.getElementById('openDonateBtn');
+    const closeDonateBtn = document.getElementById('closeDonateBtn');
+    const donateFormStep = document.getElementById('donateFormStep');
+    const qrCodeStep = document.getElementById('qrCodeStep');
+    const generateQRBtn = document.getElementById('generateQRBtn');
+    const checkPaymentBtn = document.getElementById('checkPaymentBtn');
+    const backToFormBtn = document.getElementById('backToFormBtn');
+    const donateAmount = document.getElementById('donateAmount');
+    const donorName = document.getElementById('donorName');
+    const qrImage = document.getElementById('qrImage');
+    const qrAmount = document.getElementById('qrAmount');
+    const qrTransactionId = document.getElementById('qrTransactionId');
+    const qrExpired = document.getElementById('qrExpired');
+    const paymentStatus = document.getElementById('paymentStatus');
+    
+    let currentTransactionId = null;
+    let checkInterval = null;
+    
+    openDonateBtn.addEventListener('click', () => {
+        donateOverlay.classList.add('active');
+        resetDonateForm();
+    });
+    
+    closeDonateBtn.addEventListener('click', () => {
+        donateOverlay.classList.remove('active');
+        stopCheckInterval();
+    });
+    
+    donateOverlay.addEventListener('click', e => { if(e.target === donateOverlay) { donateOverlay.classList.remove('active'); stopCheckInterval(); }});
+    
+    document.querySelectorAll('.amount-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            donateAmount.value = btn.dataset.amount;
+        });
+    });
+    
+    function resetDonateForm() {
+        donateFormStep.style.display = 'block';
+        qrCodeStep.style.display = 'none';
+        stopCheckInterval();
+    }
+    
+    function stopCheckInterval() {
+        if (checkInterval) {
+            clearInterval(checkInterval);
+            checkInterval = null;
+        }
+    }
+    
+    async function createPayment(amount, name) {
+        try {
+            const response = await fetch('/api/create-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: amount,
+                    customer_name: name,
+                    phone: '',
+                    message: 'Donasi Yuzz Hade'
+                })
+            });
+            
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Create payment error:', error);
+            return { success: false, message: 'Gagal terhubung ke server' };
+        }
+    }
+    
+    async function checkPaymentStatus(transactionId) {
+        try {
+            const response = await fetch(`/api/check-payment?transaction_id=${transactionId}`);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Check payment error:', error);
+            return { success: false, message: 'Gagal cek status' };
+        }
+    }
+    
+    function formatRupiah(amount) {
+        return 'Rp ' + Number(amount).toLocaleString('id-ID');
+    }
+    
+    generateQRBtn.addEventListener('click', async () => {
+        const amount = parseInt(donateAmount.value);
+        const name = donorName.value.trim() || 'Supporter';
+        
+        if (amount < 5000) {
+            alert('Minimal donasi Rp 5.000');
+            return;
+        }
+        
+        generateQRBtn.disabled = true;
+        generateQRBtn.innerHTML = '<span class="spinner"></span> Memproses...';
+        
+        const result = await createPayment(amount, name);
+        
+        generateQRBtn.disabled = false;
+        generateQRBtn.innerHTML = '<i class="fas fa-qrcode"></i> Buat QRIS';
+        
+        if (!result.success) {
+            alert('Gagal membuat pembayaran: ' + result.message);
+            return;
+        }
+        
+        const data = result.data;
+        currentTransactionId = data.transaction_id;
+        
+        qrImage.src = data.qr_image;
+        qrAmount.textContent = formatRupiah(data.amount);
+        qrTransactionId.textContent = data.transaction_id;
+        qrExpired.textContent = data.expires_at;
+        
+        donateFormStep.style.display = 'none';
+        qrCodeStep.style.display = 'block';
+        
+        paymentStatus.className = 'payment-status pending';
+        paymentStatus.innerHTML = '<i class="fas fa-clock"></i> Menunggu Pembayaran';
+        
+        // Auto check setiap 5 detik
+        stopCheckInterval();
+        checkInterval = setInterval(async () => {
+            const statusResult = await checkPaymentStatus(currentTransactionId);
+            if (statusResult.success && statusResult.data.is_paid) {
+                paymentStatus.className = 'payment-status paid';
+                paymentStatus.innerHTML = '<i class="fas fa-check-circle"></i> Pembayaran Berhasil! Terima kasih!';
+                stopCheckInterval();
+            }
+        }, 5000);
+    });
+    
+    checkPaymentBtn.addEventListener('click', async () => {
+        if (!currentTransactionId) return;
+        
+        checkPaymentBtn.disabled = true;
+        checkPaymentBtn.innerHTML = '<span class="spinner"></span> Mengecek...';
+        
+        const result = await checkPaymentStatus(currentTransactionId);
+        
+        checkPaymentBtn.disabled = false;
+        checkPaymentBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Cek Status';
+        
+        if (result.success && result.data.is_paid) {
+            paymentStatus.className = 'payment-status paid';
+            paymentStatus.innerHTML = '<i class="fas fa-check-circle"></i> Pembayaran Berhasil! Terima kasih!';
+            stopCheckInterval();
+            alert('Pembayaran berhasil! Terima kasih atas donasi Anda!');
+        } else {
+            alert('Pembayaran belum diterima. Silakan coba lagi nanti.');
+        }
+    });
+    
+    backToFormBtn.addEventListener('click', () => {
+        resetDonateForm();
+    });
+    
+    // ========== OVERLAY UPDATE ==========
+    const overlay = document.getElementById('updateOverlay');
+    const closeBtn = document.getElementById('closeUpdateBtn');
+    const continueBtn = document.getElementById('continueBtn');
+    const dontShow = document.getElementById('dontShowAgainCheck');
+    if(sessionStorage.getItem('hideUpdate')==='true') overlay.classList.add('hidden');
+    function hideOverlay(){ overlay.classList.add('hidden'); if(dontShow.checked) sessionStorage.setItem('hideUpdate','true'); }
+    closeBtn.addEventListener('click', hideOverlay);
+    continueBtn.addEventListener('click', hideOverlay);
+    overlay.addEventListener('click', e => { if(e.target===overlay) hideOverlay(); });
+    
+    // ========== FFMPEG ==========
+    const { FFmpeg } = FFmpegWASM;
+    const ffmpeg = new FFmpeg();
+    let ffmpegLoaded = false;
+    let ffmpegLoadAttempted = false;
+    
+    const ffmpegStatusText = document.getElementById('ffmpegStatusText');
+    const ffmpegProgressBar = document.getElementById('ffmpegProgressBar');
+    const ffmpegProgressText = document.getElementById('ffmpegProgressText');
+    
+    ffmpeg.on('progress', ({ progress }) => {
+        const p = Math.round(progress * 100);
+        ffmpegProgressBar.style.width = `${p}%`;
+        ffmpegProgressText.textContent = `${p}%`;
+    });
+    
+    async function loadFFmpeg() {
+        if (ffmpegLoaded) return true;
+        if (ffmpegLoadAttempted) return false;
+        
+        ffmpegLoadAttempted = true;
+        ffmpegStatusText.innerHTML = '<span class="spinner"></span> Loading FFmpeg...';
+        
+        try {
+            await ffmpeg.load({
+                coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+                wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm'
+            });
+            ffmpegLoaded = true;
+            ffmpegStatusText.innerHTML = '<i class="fas fa-check-circle" style="color:#00ff88;"></i> FFmpeg siap!';
+            ffmpegProgressBar.style.width = '100%';
+            ffmpegProgressText.textContent = '100%';
+            return true;
+        } catch (e) {
+            console.warn('FFmpeg gagal, gunakan fallback:', e);
+            ffmpegStatusText.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#ffaa00;"></i> Mode Fallback';
+            ffmpegProgressText.textContent = 'Fallback';
+            return false;
+        }
+    }
+    
+    loadFFmpeg();
+    
+    // ========== DOM UPLOAD ==========
+    const videoInput = document.getElementById('videoInput');
+    const photoInput = document.getElementById('photoInput');
+    const mediaContainer = document.getElementById('mediaContainer');
+    const totalSize = document.getElementById('totalSizeDisplay');
+    const progCont = document.getElementById('progressContainer');
+    const progFill = document.getElementById('progressFillMain');
+    const progText = document.getElementById('progressTextMain');
+    
+    let mediaItems = [];
+    
+    function formatBytes(b) { 
+        const k = 1024, s = ['B','KB','MB','GB']; 
+        const i = Math.floor(Math.log(b) / Math.log(k)); 
+        return parseFloat((b / Math.pow(k, i)).toFixed(2)) + ' ' + s[i]; 
+    }
+    
+    function updateTotal() { 
+        const t = mediaItems.reduce((a, i) => a + (i.size || 0), 0); 
+        totalSize.textContent = (t / (1024 * 1024)).toFixed(2) + ' MB'; 
+    }
+    
+    function showProgress(s, t = '', p = 0) { 
+        progCont.style.display = s ? 'block' : 'none'; 
+        if (s) { progText.textContent = t; progFill.style.width = Math.min(p, 100) + '%'; } 
+    }
+    
+    async function processImage(file) {
+        showProgress(true, 'Memproses SUPER HD...', 30);
+        return new Promise(async (resolve, reject) => {
+            try {
+                const buf = await file.arrayBuffer();
+                const img = await Jimp.read(Buffer.from(buf));
+                showProgress(true, 'Enhancement...', 50);
+                
+                const maxW = 2560, maxH = 1440;
+                if (img.bitmap.width > maxW || img.bitmap.height > maxH) {
+                    img.contain(maxW, maxH, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE);
+                }
+                
+                img.contrast(0.08).brightness(0.02).quality(98);
+                img.convolute([[0, -0.2, 0], [-0.2, 1.8, -0.2], [0, -0.2, 0]]);
+                
+                try {
+                    const font = await Jimp.loadFont(Jimp.FONT_SANS_16_WHITE);
+                    img.print(font, 20, img.bitmap.height - 40, '© YUZZ HADE');
+                } catch (e) {}
+                
+                showProgress(true, 'Encoding...', 80);
+                const outBuf = await img.getBufferAsync(Jimp.MIME_JPEG);
+                const b64 = btoa(new Uint8Array(outBuf).reduce((d, b) => d + String.fromCharCode(b), ''));
+                
+                showProgress(true, 'Selesai!', 100);
+                setTimeout(() => showProgress(false), 500);
+                resolve({ dataUrl: `data:image/jpeg;base64,${b64}`, size: outBuf.byteLength });
+            } catch (e) { reject(e); }
+        });
+    }
+    
+    async function processVideo(file) {
+        showProgress(true, 'Memproses Video...', 20);
+        
+        const ffmpegReady = await loadFFmpeg();
+        
+        if (!ffmpegReady) {
+            showProgress(true, 'Mode Fallback (Video Asli)...', 50);
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    showProgress(true, 'Selesai!', 100);
+                    setTimeout(() => showProgress(false), 500);
+                    resolve({ dataUrl: e.target.result, size: file.size });
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        showProgress(true, 'Encoding SUPER HD...', 40);
+        const inName = 'i' + Date.now() + '.' + file.name.split('.').pop();
+        const outName = 'o' + Date.now() + '.mp4';
+        
+        try {
+            const ab = await file.arrayBuffer();
+            await ffmpeg.writeFile(inName, new Uint8Array(ab));
+            await ffmpeg.exec([
+                '-i', inName,
+                '-c:v', 'libx264',
+                '-crf', '18',
+                '-preset', 'medium',
+                '-vf', "unsharp=3:3:0.8,eq=contrast=1.05:brightness=0.01,drawtext=text='© YUZZ HADE':fontcolor=white@0.4:fontsize=24:x=15:y=15",
+                '-c:a', 'aac',
+                '-b:a', '192k',
+                '-movflags', '+faststart',
+                outName
+            ]);
+            
+            const data = await ffmpeg.readFile(outName);
+            await ffmpeg.deleteFile(inName);
+            await ffmpeg.deleteFile(outName);
+            
+            const blob = new Blob([data.buffer], { type: 'video/mp4' });
+            const url = await new Promise(r => { 
+                const fr = new FileReader(); 
+                fr.onload = e => r(e.target.result); 
+                fr.readAsDataURL(blob); 
+            });
+            
+            showProgress(true, 'Selesai!', 100);
+            setTimeout(() => showProgress(false), 500);
+            return { dataUrl: url, size: data.byteLength };
+        } catch (e) {
+            console.warn('FFmpeg encoding gagal, fallback:', e);
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (ev) => resolve({ dataUrl: ev.target.result, size: file.size });
+                reader.readAsDataURL(file);
+            });
+        }
+    }
+    
+    function render() {
+        if (!mediaItems.length) {
+            mediaContainer.innerHTML = '<div style="color:#8f846e;padding:30px;"><i class="fas fa-arrow-up"></i> Upload media</div>';
+            updateTotal();
+            return;
+        }
+        
+        let h = '';
+        mediaItems.forEach((it, i) => {
+            const isV = it.category === 'video';
+            h += `<div class="preview-card">
+                <div class="preview-media">
+                    ${isV ? `<video src="${it.dataUrl}" controls controlsList="nodownload" oncontextmenu="return false;" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>` : `<img src="${it.dataUrl}" style="width:100%;height:100%;object-fit:contain;background:#000;" oncontextmenu="return false;" draggable="false">`}
+                </div>
+                <div class="media-meta">
+                    <span><i class="far ${isV ? 'fa-video' : 'fa-image'}"></i> ${it.name}</span>
+                    <span class="hd-badge">SUPER HD</span>
+                </div>
+                <div class="media-meta"><span>${formatBytes(it.size)}</span></div>
+                <div class="action-row">
+                    <button class="icon-btn download" data-i="${i}"><i class="fas fa-download"></i></button>
+                    <button class="icon-btn remove" data-i="${i}"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>`;
+        });
+        
+        mediaContainer.innerHTML = h;
+        updateTotal();
+        
+        document.querySelectorAll('.download').forEach(b => b.addEventListener('click', e => {
+            const i = b.dataset.i;
+            if (i) {
+                const a = document.createElement('a');
+                a.href = mediaItems[i].dataUrl;
+                a.download = 'YuzzHade_' + mediaItems[i].name;
+                a.click();
+            }
+        }));
+        
+        document.querySelectorAll('.remove').forEach(b => b.addEventListener('click', e => {
+            const i = b.dataset.i;
+            if (i) { mediaItems.splice(i, 1); render(); }
+        }));
+    }
+    
+    async function processFile(file, cat) {
+        if (file.size > (cat === 'video' ? 100 : 50) * 1024 * 1024) {
+            alert('File terlalu besar!');
+            return;
+        }
+        
+        try {
+            const res = cat === 'photo' ? await processImage(file) : await processVideo(file);
+            mediaItems.push({ name: file.name, type: file.type, size: res.size, dataUrl: res.dataUrl, category: cat });
+            render();
+        } catch (e) {
+            alert('Gagal: ' + e.message);
+            showProgress(false);
+        }
+    }
+    
+    videoInput.addEventListener('change', e => { 
+        const f = videoInput.files[0]; 
+        if (f) processFile(f, 'video'); 
+        videoInput.value = ''; 
+    });
+    
+    photoInput.addEventListener('change', e => { 
+        const f = photoInput.files[0]; 
+        if (f) processFile(f, 'photo'); 
+        photoInput.value = ''; 
+    });
+    
+    document.getElementById('videoUploadBtn').addEventListener('click', () => videoInput.click());
+    document.getElementById('photoUploadBtn').addEventListener('click', () => photoInput.click());
+    
+    render();
+})();
+</script>
+</body>
+</html>
