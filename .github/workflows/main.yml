@@ -1,0 +1,35 @@
+name: Extract ZIP and Commit
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'yuzzhade.zip'
+  workflow_dispatch:
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract ZIP file
+        run: |
+          unzip -o yuzzhade.zip -d ./extracted_contents
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push extracted files
+        run: |
+          git add extracted_contents/
+          git commit -m "Extract yuzzhade.zip contents" || echo "No changes to commit"
+          git push
+          
