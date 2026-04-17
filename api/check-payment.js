@@ -9,8 +9,8 @@ module.exports = async (req, res) => {
     const { transaction_id } = req.query;
     if (!transaction_id) return res.status(400).json({ success: false, message: 'Transaction ID diperlukan' });
 
-    const apiKey = process.env.QRISPW_API_KEY;
-    const apiSecret = process.env.QRISPW_API_SECRET;
+    const apiKey = process.env.d4916f89fbec709eac2f4d69a12d3252ab9db6d265eda2d37dc2e63b4dbb27c9;
+    const apiSecret = process.env.9f5407f7b0e4fb908bec20c20d35131b212e893b84c756ae406a6adcdb57ccbf;
 
     try {
         const response = await axios.get(`https://qris.pw/api/check-payment.php?transaction_id=${transaction_id}`, {
