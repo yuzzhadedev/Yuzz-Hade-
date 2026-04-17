@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+    
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta name="download" content="no">
+    <meta name="save" content="no">
+    
+    <title>🔒 Yuzz Hade · SUPER HD</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/jimp@0.22.12/browser/lib/jimp.min.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.min.js"></script>
+</head>
+<body>
+
+<!-- Security Alert -->
+<div class="security-alert" id="securityAlert"><i class="fas fa-shield-alt"></i> Tindakan tidak diizinkan!</div>
+<div class="security-badge"><i class="fas fa-lock"></i><span>PROTECTED · ANTI-GETCODE</span></div>
+
+<!-- Donasi Button -->
+<div class="donate-btn-fixed">
+    <button class="donate-btn" id="openDonateBtn">
+        <i class="fas fa-heart" style="color: #ff4d4d;"></i> Donasi
+    </button>
+</div>
+
+<!-- Donasi Modal -->
+<div class="donate-overlay" id="donateOverlay">
+    <div class="donate-modal">
+        <button class="close-modal-btn" id="closeDonateBtn">&times;</button>
+        <div class="donate-header">
+            <i class="fas fa-hand-holding-heart"></i>
+            <h3>Dukung Yuzz Hade</h3>
+            <p>Donasi Anda membantu kami terus berkembang</p>
+        </div>
+        <div id="donateFormStep">
+            <div class="donate-form">
+                <input type="text" id="donorName" placeholder="Nama Anda" value="Supporter">
+                <input type="number" id="donateAmount" placeholder="Jumlah (Min Rp 5.000)" min="5000" value="10000">
+                <div class="amount-buttons">
+                    <button class="amount-btn" data-amount="5000">Rp 5K</button>
+                    <button class="amount-btn active" data-amount="10000">Rp 10K</button>
+                    <button class="amount-btn" data-amount="20000">Rp 20K</button>
+                    <button class="amount-btn" data-amount="50000">Rp 50K</button>
+                    <button class="amount-btn" data-amount="100000">Rp 100K</button>
+                </div>
+                <button class="donate-submit-btn" id="generateQRBtn">
+                    <i class="fas fa-qrcode"></i> Buat QRIS
+                </button>
+            </div>
+        </div>
+        <div id="qrCodeStep" style="display:none;">
+            <div class="qr-container">
+                <img id="qrImage" src="" alt="QRIS">
+            </div>
+            <div class="qr-info">
+                <p><span class="label">Total:</span> <span class="value" id="qrAmount"></span></p>
+                <p><span class="label">ID Transaksi:</span> <span class="value" id="qrTransactionId"></span></p>
+                <p><span class="label">Kadaluarsa:</span> <span class="value" id="qrExpired"></span></p>
+            </div>
+            <div class="payment-status pending" id="paymentStatus">
+                <i class="fas fa-clock"></i> Menunggu Pembayaran
+            </div>
+            <button class="donate-submit-btn" id="checkPaymentBtn" style="margin-top:12px;">
+                <i class="fas fa-sync-alt"></i> Cek Status
+            </button>
+            <button class="donate-submit-btn" id="backToFormBtn" style="margin-top:8px; background:#3a3327; color:#fff;">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Update Overlay - DIPERBAIKI -->
+<div class="update-overlay" id="updateOverlay">
+    <div class="update-modal">
+        <button class="close-icon" id="closeUpdateBtn">&times;</button>
+        <div class="modal-logo">Yuzz<span> Hade</span></div>
+        <div class="update-icon"><i class="fas fa-shield-halved"></i></div>
+        <h2 class="modal-title">🔒 UPDATE TERBARU</h2>
+        <div class="modal-subtitle">Perlindungan Maksimal · Anti-GetCode/Zip</div>
+        <div class="update-info">
+            <p><i class="fas fa-check-circle"></i> <span><span class="highlight">Security On</span> - Anti-GetCode, Anti-Zip</span></p>
+            <p><i class="fas fa-check-circle"></i> <span><span class="highlight">Anti-Downloader</span> - Tools diblokir</span></p>
+            <p><i class="fas fa-check-circle"></i> <span><span class="highlight">Rasio Asli</span> - Gambar tidak terpotong</span></p>
+            <p><i class="fas fa-check-circle"></i> <span><span class="highlight">Fitur Donasi</span> - Dukung kami via QRIS</span></p>
+        </div>
+        <div class="next-update">
+            <i class="fas fa-calendar-alt" style="color: var(--gold);"></i>
+            <strong>Update Selanjutnya:</strong> 20 April 2026
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-primary" id="continueBtn">
+                <i class="fas fa-arrow-right"></i> Lanjutkan
+            </button>
+        </div>
+        <label class="dont-show-label">
+            <input type="checkbox" id="dontShowAgainCheck"> Jangan tampilkan lagi
+        </label>
+        <div style="margin-top: 16px; color: #7a7265; font-size: 0.8rem;">
+            <p>© 2026 Yuzz Hade · Develop By <span class="developer">Mutz</span></p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Website -->
+<div class="main-website">
+    <div class="top-bar">
+        <div class="container header-flex">
+            <div class="logo">Yuzz<span> Hade</span></div>
+            <div class="badge-premium"><span class="status-indicator"></span><i class="fas fa-shield"></i> PROTECTED</div>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="hero">
+            <h1><i class="fas fa-crown"></i> SUPER HD</h1>
+            <div class="hero-sub">
+                <strong>Yuzz Hade</strong> — Anti-GetCode · Rasio Asli · Clean Quality<br>
+                Maks 100MB video · 50MB foto
+            </div>
+        </section>
+
+        <div class="capacity-notice">
+            <div class="cap-item"><i class="fas fa-video cap-icon"></i><div class="cap-text"><div class="cap-label">Video</div><div class="cap-value">≤ 100 <small>MB</small></div></div></div>
+            <div class="cap-item"><i class="fas fa-camera-retro cap-icon"></i><div class="cap-text"><div class="cap-label">Foto</div><div class="cap-value">≤ 50 <small>MB</small></div></div></div>
+        </div>
+
+        <div class="upload-panel">
+            <div class="ffmpeg-status" id="ffmpegStatus">
+                <i class="fas fa-cog" style="color:var(--gold);"></i>
+                <span id="ffmpegStatusText">Memuat FFmpeg...</span>
+                <div class="ffmpeg-progress"><div class="ffmpeg-progress-bar" id="ffmpegProgressBar"></div></div>
+                <span class="ffmpeg-text" id="ffmpegProgressText">0%</span>
+            </div>
+
+            <div class="dual-upload">
+                <div class="upload-card" id="videoUploadCard">
+                    <i class="fas fa-clapperboard upload-icon"></i><h3>Video</h3>
+                    <div class="upload-limit"><i class="far fa-file-video"></i> max 100MB</div>
+                    <button class="upload-btn" id="videoUploadBtn"><i class="fas fa-cloud-upload-alt"></i> Pilih Video</button>
+                    <input type="file" id="videoInput" accept="video/*">
+                </div>
+                <div class="upload-card" id="photoUploadCard">
+                    <i class="fas fa-camera upload-icon"></i><h3>Foto</h3>
+                    <div class="upload-limit"><i class="far fa-image"></i> max 50MB</div>
+                    <button class="upload-btn" id="photoUploadBtn"><i class="fas fa-cloud-upload-alt"></i> Pilih Foto</button>
+                    <input type="file" id="photoInput" accept="image/*">
+                </div>
+            </div>
+
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar"><div class="progress-fill-main" id="progressFillMain"></div></div>
+                <div class="progress-text-main" id="progressTextMain">Memproses...</div>
+            </div>
+
+            <div class="preview-area">
+                <div class="preview-header"><h4><i class="fas fa-crown" style="color:var(--gold);"></i> Hasil SUPER HD</h4><span id="totalSizeDisplay">0 MB</span></div>
+                <div class="media-preview-container" id="mediaContainer">
+                    <div style="color:#8f846e;padding:30px;"><i class="fas fa-arrow-up"></i> Upload media</div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">Yuzz<span style="color:var(--gold);"> Hade</span> <i class="fas fa-shield"></i></div>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i> @yuzzhade</a>
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                </div>
+                <div class="copyright"><p>© 2026 Yuzz Hade · <span class="heart">❤️</span> by <span class="developer">Mutz</span></p></div>
+            </div>
+        </footer>
+    </main>
+</div>
+
+<!-- JavaScript -->
+<script src="js/main.js"></script>
+</body>
+</html>
