@@ -11,8 +11,8 @@ module.exports = async (req, res) => {
     const { amount, customer_name, phone, message } = req.body;
     if (!amount || !customer_name) return res.status(400).json({ success: false, message: 'Amount dan nama diperlukan' });
 
-    const apiKey = process.env.QRISPW_API_KEY;
-    const apiSecret = process.env.QRISPW_API_SECRET;
+    const apiKey = process.env.d4916f89fbec709eac2f4d69a12d3252ab9db6d265eda2d37dc2e63b4dbb27c9;
+    const apiSecret = process.env.9f5407f7b0e4fb908bec20c20d35131b212e893b84c756ae406a6adcdb57ccbf;
     if (!apiKey || !apiSecret) return res.status(500).json({ success: false, message: 'API Key tidak dikonfigurasi' });
 
     try {
